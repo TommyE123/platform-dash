@@ -32,10 +32,10 @@ description: "Implementation task list for TrainRepository feature"
 **Duration**: ~30 minutes
 **Deliverable**: Buildable Kotlin project with test framework configured
 
-- [ ] T001 Create Android module directory structure at `app/src/main/kotlin/com/platformdash/data/repository/` and `app/src/test/kotlin/com/platformdash/data/repository/`
-- [ ] T002 [P] Configure `build.gradle.kts` with Kotlin 1.9, JUnit 4+, and Android test dependencies (Jetpack, AndroidX)
-- [ ] T003 [P] Configure linting (ktlint or Detekt) and formatting tools; add pre-commit hooks
-- [ ] T004 Create empty package structure with `package com.platformdash.data.repository` and `package com.platformdash.data.repository.mock`
+- [x] T001 Create Android module directory structure at `app/src/main/kotlin/com/platformdash/data/repository/` and `app/src/test/kotlin/com/platformdash/data/repository/`
+- [x] T002 [P] Configure `build.gradle.kts` with Kotlin 1.9, JUnit 4+, and Android test dependencies (Jetpack, AndroidX)
+- [x] T003 [P] Defer linting to CI/CD (Mega-Linter); local hooks removed.
+- [x] T004 Create empty package structure with `package com.platformdash.data.repository` and `package com.platformdash.data.repository.mock`
 
 **Checkpoint**: Kotlin project compiles, test framework is ready
 
