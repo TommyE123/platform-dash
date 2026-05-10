@@ -1,0 +1,1 @@
+# Baseline rules for initial scaffold.
