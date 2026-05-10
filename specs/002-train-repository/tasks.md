@@ -52,8 +52,8 @@ description: "Implementation task list for TrainRepository feature"
 **Duration**: ~1 hour
 **Deliverable**: Compilable TrainRepository interface, TrainDeparture data class, DepartureStatus enum
 
-- [ ] T005 [P] Create `DepartureStatus.kt` enum with three values: `ON_TIME`, `DELAYED`, `CANCELLED` in `app/src/main/kotlin/com/platformdash/data/repository/`
-- [ ] T006 [P] Create `TrainDeparture.kt` data class with all required fields in `app/src/main/kotlin/com/platformdash/data/repository/`:
+- [x] T005 [P] Create `DepartureStatus.kt` enum with three values: `ON_TIME`, `DELAYED`, `CANCELLED` in `app/src/main/kotlin/com/platformdash/data/repository/`
+- [x] T006 [P] Create `TrainDeparture.kt` data class with all required fields in `app/src/main/kotlin/com/platformdash/data/repository/`:
   - `aimedDepartureTime: OffsetDateTime` (required)
   - `expectedDepartureTime: OffsetDateTime` (required)
   - `platform: String` (required)
@@ -61,7 +61,7 @@ description: "Implementation task list for TrainRepository feature"
   - `status: DepartureStatus` (required)
   - `notes: String? = null` (optional)
   - Include init block for field validation (non-empty strings, notes max 200 chars)
-- [ ] T007 [P] Create `TrainRepository.kt` interface with single method signature:
+- [x] T007 [P] Create `TrainRepository.kt` interface with single method signature:
   ```
   fun getNextDepartures(origin: String, destination: String): List<TrainDeparture>
   ```
