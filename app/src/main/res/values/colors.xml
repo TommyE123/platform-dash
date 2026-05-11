@@ -2,6 +2,7 @@
 <resources>
     <color name="widget_gbr_navy">#071D49</color>
     <color name="widget_gbr_red">#E60000</color>
+    <color name="widget_gbr_yellow">#FFD100</color>
     <color name="widget_gbr_white">#FFFFFF</color>
 
     <color name="widget_light_background">#FFFFFF</color>

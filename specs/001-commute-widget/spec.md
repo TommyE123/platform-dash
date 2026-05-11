@@ -20,8 +20,11 @@ Build and iterate an Android Jetpack Glance commute widget that can display depa
 - FR-004: Cancelled services MUST be highlighted in GBR Red (#E60000).
 - FR-005: Widget MUST support only Light and Dark modes and MUST NOT expose any System theme toggle.
 - FR-006: Widget MUST use SizeMode.Exact for rendering behavior.
-- FR-007: Root widget container MUST render the dual-border treatment via nested border and padding modifiers.
+- FR-007: Root widget container MUST render the dual-border treatment via nested border and padding modifiers at 3x the previous border thickness baseline.
 - FR-008: All text MUST use the contrast theme color for the active mode, except Cancelled status text which MUST use GBR Red (#E60000).
+- FR-009: App settings UI MUST use GBR color styling with navy/red primary buttons, white/navy page background by mode, and yellow border treatment.
+- FR-010: App border accents MUST use yellow and MUST be rendered at 3x the previous border thickness baseline.
+- FR-011: Changing app theme mode MUST refresh widget colors immediately without requiring app restart.
 
 ## Visual Requirements
 
@@ -35,11 +38,14 @@ Build and iterate an Android Jetpack Glance commute widget that can display depa
   - Row spacing: 6dp
 - VR-005 Cancellation Emphasis: Cancelled rows are rendered in GBR Red (#E60000).
 - VR-006 Empty State: If no departures exist, widget shows "No departures available" in body text style.
-- VR-007 Border Styling Light: Light mode border is double-stroked using outer 2dp GBR Navy (#071D49) then inner 1dp GBR Red (#E60000).
-- VR-008 Border Styling Dark: Dark mode border is double-stroked using outer 2dp GBR White (#FFFFFF) then inner 1dp GBR Red (#E60000).
+- VR-007 Border Styling Light: Light mode border is double-stroked using outer 6dp GBR Navy (#071D49) then inner 3dp GBR Red (#E60000).
+- VR-008 Border Styling Dark: Dark mode border is double-stroked using outer 6dp GBR White (#FFFFFF) then inner 3dp GBR Red (#E60000).
 - VR-009 Border Implementation Rule: Root Column MUST apply nested border and padding modifiers in sequence so both border strokes remain visible.
 - VR-010 Text Colors Light: Text in light mode uses GBR Navy (#071D49) for primary readability over white background.
 - VR-011 Text Colors Dark: Text in dark mode uses GBR White (#FFFFFF) for primary readability over navy background.
+- VR-012 App Control Colors: Theme controls and primary actions use GBR Navy or GBR Red fill with yellow border accents.
+- VR-013 App Surface Colors: App settings background is white in Light mode and navy in Dark mode.
+- VR-014 App Border Width: Yellow app border accents use 3dp width.
 
 ## Resizing Logic
 
@@ -74,7 +80,10 @@ Build and iterate an Android Jetpack Glance commute widget that can display depa
 - AC-001 Header shows selected origin -> destination at 14sp bold.
 - AC-002 Departure count follows breakpoints: 3 in Small/Medium views, 5 in Large view.
 - AC-003 Cancelled service text appears in GBR Red (#E60000).
-- AC-004 Widget displays correctly in both Light (white background with 2dp navy outer and 1dp red inner border, navy text) and Dark (navy background with 2dp white outer and 1dp red inner border, white text) modes.
+- AC-004 Widget displays correctly in both Light (white background with 6dp navy outer and 3dp red inner border, navy text) and Dark (navy background with 6dp white outer and 3dp red inner border, white text) modes.
 - AC-005 Widget behavior remains deterministic when using mock scenarios.
 - AC-006 Non-cancelled text appears in contrast theme color for the active mode.
 - AC-007 Project build baseline for this feature remains on AGP 9.2.1.
+- AC-008 App settings UI displays GBR styling with navy/red buttons, yellow borders, and mode-correct white/navy background.
+- AC-009 Yellow app border accents render at 3dp width.
+- AC-010 Changing Light/Dark mode updates the widget color palette immediately without closing and reopening the app.

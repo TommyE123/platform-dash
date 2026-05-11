@@ -6,7 +6,7 @@ Defines the behavioral contract between widget rendering logic and repository ou
 ## Inputs
 - Route: originCode, destinationCode
 - Departures aggregate from TrainRepository.getDepartures(route)
-- ThemeMode preference: SYSTEM | LIGHT | DARK
+- ThemeMode preference: LIGHT | DARK
 - Widget size height for scale selection
 
 ## Repository contract
@@ -28,21 +28,31 @@ Defines the behavioral contract between widget rendering logic and repository ou
 - MUST render top 5 rows when height > 200dp.
 
 3. Status mapping
-- ON_TIME -> text label On time and success green text color.
-- DELAYED -> text label Delayed and default text color.
-- CANCELLED -> text label Cancelled and error red text color.
+- ON_TIME -> text label On time and contrast theme text color.
+- DELAYED -> text label Delayed and contrast theme text color.
+- CANCELLED -> text label Cancelled and GBR Red (#E60000) text color.
 
 4. Empty state
 - If services list is empty, MUST display No departures available.
 
 5. Theme behavior
-- SYSTEM mode uses configured widget background/text resources.
-- LIGHT mode uses light background with dark text.
-- DARK mode uses dark background with light text.
+- LIGHT mode uses white background with GBR Navy (#071D49) text.
+- DARK mode uses GBR Navy (#071D49) background with white text.
 
-6. Sizing behavior
+6. App UI styling
+- Theme controls and primary actions use GBR Navy or GBR Red fill with yellow border accents.
+- Yellow app border accents use 3dp width.
+
+7. Theme refresh behavior
+- Theme changes MUST refresh the widget colors immediately without requiring app restart.
+
+8. Sizing behavior
 - MUST use Glance SizeMode.Exact.
 - Widget metadata MUST allow horizontal and vertical resize.
+
+9. Widget border thickness
+- Light mode uses outer 6dp GBR Navy (#071D49) and inner 3dp GBR Red (#E60000).
+- Dark mode uses outer 6dp GBR White (#FFFFFF) and inner 3dp GBR Red (#E60000).
 
 ## Non-contractual notes (deferred)
 - Live API integration is intentionally out-of-scope.

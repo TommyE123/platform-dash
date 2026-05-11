@@ -19,6 +19,6 @@ object ThemePreferences {
             .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             .edit()
             .putString(KEY_THEME_MODE, mode.name)
-            .apply()
+            .commit()
     }
 }

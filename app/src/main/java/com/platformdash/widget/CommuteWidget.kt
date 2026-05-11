@@ -46,6 +46,9 @@ class CommuteWidget : GlanceAppWidget() {
     }
 }
 
+private val WidgetBorderOuterWidth = 6.dp
+private val WidgetBorderInnerWidth = 3.dp
+
 @Composable
 private fun CommuteWidgetContent(
     departures: Departures,
@@ -59,13 +62,13 @@ private fun CommuteWidgetContent(
         modifier = GlanceModifier
             .fillMaxSize()
             .background(colors.borderOuter)
-            .padding(2.dp)
+            .padding(WidgetBorderOuterWidth)
     ) {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(colors.borderInner)
-                .padding(1.dp)
+                .padding(WidgetBorderInnerWidth)
         ) {
             Column(
                 modifier = GlanceModifier
