@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.LocalSize
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Column
@@ -31,6 +34,7 @@ import com.platformdash.settings.ThemePreferences
 
 class CommuteWidget : GlanceAppWidget() {
     private val repository = MockTrainRepository()
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val departures = repository.getDepartures(Route.DefaultCommute)
@@ -49,7 +53,8 @@ private fun CommuteWidgetContent(
     departures: Departures,
     mode: ThemeMode,
 ) {
-    val topServices = departures.services.take(3)
+    val scale = widgetScaleConfig(LocalSize.current.height)
+    val topServices = departures.services.take(scale.maxTrains)
     val cancelledColor = ColorProvider(MaterialTheme.colorScheme.error)
     val colors = widgetColors(mode = mode)
 
@@ -62,7 +67,7 @@ private fun CommuteWidgetContent(
         Text(
             text = "${departures.route.normalizedOrigin} -> ${departures.route.normalizedDestination}",
             style = TextStyle(
-                fontSize = 20.sp,
+                fontSize = scale.headerFontSize,
                 fontWeight = FontWeight.Bold,
                 color = colors.text,
             )
@@ -84,6 +89,7 @@ private fun CommuteWidgetContent(
                     service = service,
                     cancelledColor = cancelledColor,
                     textColor = colors.text,
+                    timeFontSize = scale.timeFontSize,
                 )
                 Spacer(modifier = GlanceModifier.height(6.dp))
             }
@@ -115,11 +121,41 @@ private fun widgetColors(mode: ThemeMode): WidgetColors {
         )
     }
 }
+
+private data class WidgetScaleConfig(
+    val headerFontSize: androidx.compose.ui.unit.TextUnit,
+    val timeFontSize: androidx.compose.ui.unit.TextUnit,
+    val maxTrains: Int,
+)
+
+private fun widgetScaleConfig(height: Dp): WidgetScaleConfig {
+    return when {
+        height < 100.dp -> WidgetScaleConfig(
+            headerFontSize = 12.sp,
+            timeFontSize = 14.sp,
+            maxTrains = 3,
+        )
+
+        height <= 200.dp -> WidgetScaleConfig(
+            headerFontSize = 14.sp,
+            timeFontSize = 18.sp,
+            maxTrains = 3,
+        )
+
+        else -> WidgetScaleConfig(
+            headerFontSize = 18.sp,
+            timeFontSize = 24.sp,
+            maxTrains = 5,
+        )
+    }
+}
+
 @Composable
 private fun DepartureRow(
     service: Departure,
     cancelledColor: ColorProvider,
     textColor: ColorProvider,
+    timeFontSize: androidx.compose.ui.unit.TextUnit,
 ) {
     val statusText = when (service.status) {
         DepartureStatus.ON_TIME -> "On time"
@@ -134,7 +170,7 @@ private fun DepartureRow(
         Text(
             text = lineText,
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = timeFontSize,
                 fontWeight = FontWeight.Medium,
                 color = cancelledColor,
             )
@@ -143,7 +179,7 @@ private fun DepartureRow(
         Text(
             text = lineText,
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = timeFontSize,
                 fontWeight = FontWeight.Medium,
                 color = textColor,
             )
