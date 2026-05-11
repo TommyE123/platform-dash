@@ -1,7 +1,7 @@
 # Feature Specification: Commute Departures Widget
 
 **Feature Branch**: 001-commute-widget
-**Updated**: 2026-05-10
+**Updated**: 2026-05-11
 **Status**: In Progress
 
 ## Scope
@@ -17,23 +17,29 @@ Build and iterate an Android Jetpack Glance commute widget that can display depa
 - FR-001: Widget MUST render route header for the currently selected origin -> destination route.
 - FR-002: Widget MUST display departures based on widget height breakpoint (3 for Small/Medium, 5 for Large).
 - FR-003: Widget MUST use MockTrainRepository and MUST NOT call a live train API in current phase.
-- FR-004: Cancelled services MUST be highlighted in red using the error color.
-- FR-005: Widget MUST support light/dark behavior from shared theme preference (System, Light, Dark).
+- FR-004: Cancelled services MUST be highlighted in GBR Red (#E60000).
+- FR-005: Widget MUST support only Light and Dark modes and MUST NOT expose any System theme toggle.
 - FR-006: Widget MUST use SizeMode.Exact for rendering behavior.
-- FR-007: On-time services MUST be highlighted in green using the success color.
+- FR-007: Root widget container MUST render the dual-border treatment via nested border and padding modifiers.
+- FR-008: All text MUST use the contrast theme color for the active mode, except Cancelled status text which MUST use GBR Red (#E60000).
 
 ## Visual Requirements
 
-- VR-001 Surface: Widget surface uses a white background in light mode and dark surface in dark mode via shared theme handling.
+- VR-001 Surface Light: Widget surface uses GBR White (#FFFFFF) background in Light mode.
+- VR-001b Surface Dark: Widget surface uses GBR Navy (#071D49) background in Dark mode.
 - VR-002 Header Typography: Route header is bold, 14sp.
 - VR-003 Departure Typography: Departure lines are medium weight, 14sp.
 - VR-004 Spacing:
   - Outer padding: 12dp
   - Header-to-list spacing: 8dp
   - Row spacing: 6dp
-- VR-005 Cancellation Emphasis: Cancelled rows are rendered in error red.
+- VR-005 Cancellation Emphasis: Cancelled rows are rendered in GBR Red (#E60000).
 - VR-006 Empty State: If no departures exist, widget shows "No departures available" in body text style.
-- VR-007 On-time Emphasis: On-time rows are rendered in success green.
+- VR-007 Border Styling Light: Light mode border is double-stroked using outer 2dp GBR Navy (#071D49) then inner 1dp GBR Red (#E60000).
+- VR-008 Border Styling Dark: Dark mode border is double-stroked using outer 2dp GBR White (#FFFFFF) then inner 1dp GBR Red (#E60000).
+- VR-009 Border Implementation Rule: Root Column MUST apply nested border and padding modifiers in sequence so both border strokes remain visible.
+- VR-010 Text Colors Light: Text in light mode uses GBR Navy (#071D49) for primary readability over white background.
+- VR-011 Text Colors Dark: Text in dark mode uses GBR White (#FFFFFF) for primary readability over navy background.
 
 ## Resizing Logic
 
@@ -67,8 +73,8 @@ Build and iterate an Android Jetpack Glance commute widget that can display depa
 
 - AC-001 Header shows selected origin -> destination at 14sp bold.
 - AC-002 Departure count follows breakpoints: 3 in Small/Medium views, 5 in Large view.
-- AC-003 Cancelled service text appears in error red.
-- AC-004 Switching app theme mode updates app and widget visuals.
+- AC-003 Cancelled service text appears in GBR Red (#E60000).
+- AC-004 Widget displays correctly in both Light (white background with 2dp navy outer and 1dp red inner border, navy text) and Dark (navy background with 2dp white outer and 1dp red inner border, white text) modes.
 - AC-005 Widget behavior remains deterministic when using mock scenarios.
-- AC-006 On-time service text appears in success green.
+- AC-006 Non-cancelled text appears in contrast theme color for the active mode.
 - AC-007 Project build baseline for this feature remains on AGP 9.2.1.

@@ -8,10 +8,10 @@ object ThemePreferences {
 
     fun getThemeMode(context: Context): ThemeMode {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val raw = prefs.getString(KEY_THEME_MODE, ThemeMode.SYSTEM.name)
+        val raw = prefs.getString(KEY_THEME_MODE, ThemeMode.LIGHT.name)
         return raw?.let {
             ThemeMode.entries.firstOrNull { mode -> mode.name == it }
-        } ?: ThemeMode.SYSTEM
+        } ?: ThemeMode.LIGHT
     }
 
     fun setThemeMode(context: Context, mode: ThemeMode) {

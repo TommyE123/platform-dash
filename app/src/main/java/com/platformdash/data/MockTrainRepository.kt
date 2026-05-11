@@ -23,6 +23,7 @@ class MockTrainRepository(
             destinationCode = route.normalizedDestination,
         )
 
+        // Only the default commute route has fixture schedules in this increment.
         if (normalizedRoute != Route.DefaultCommute) {
             return Departures(
                 route = normalizedRoute,
@@ -33,7 +34,7 @@ class MockTrainRepository(
 
         val services = when (scenario) {
             Scenario.LBG_TO_RDH_DEFAULT -> lbgToRdhDefaultServices()
-            Scenario.LBG_TO_RDH_NO_SERVICES -> emptyList()
+            Scenario.LBG_TO_RDH_NO_SERVICES -> lbgToRdhNoServices()
             Scenario.LBG_TO_RDH_DELAY_HEAVY -> lbgToRdhDelayHeavyServices()
         }
 
@@ -97,6 +98,8 @@ class MockTrainRepository(
             status = DepartureStatus.CANCELLED,
         ),
     )
+
+    private fun lbgToRdhNoServices(): List<Departure> = emptyList()
 
     private companion object {
         val FIXED_FETCH_TIME: Instant = Instant.parse("2026-05-10T07:00:00Z")

@@ -3,13 +3,13 @@
 **Input**: Design documents from /specs/001-commute-widget/
 **Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
 
-**Tests**: No explicit TDD request in the specification, so test creation tasks are not included in this task list.
+**Tests**: No explicit TDD request in the specification, so dedicated test-authoring tasks are not included.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and verification.
 
 ## Phase 1: Setup (Shared Infrastructure)
 
-**Purpose**: Confirm build and widget metadata baseline before feature-specific changes.
+**Purpose**: Confirm build and widget metadata baseline before strict visual alignment changes.
 
 - [x] T001 Upgrade and pin AGP to 9.2.1 in build.gradle.kts and app/build.gradle.kts
 - [x] T002 Validate Compose/Glance dependency compatibility after AGP 9.2.1 alignment in app/build.gradle.kts
@@ -24,10 +24,10 @@
 
 **⚠️ CRITICAL**: Complete this phase before user-story implementation.
 
-- [ ] T005 Add explicit success/error widget status color resources in app/src/main/res/values/colors.xml
-- [ ] T006 Refine status and route domain constraints for rendering assumptions in app/src/main/java/com/platformdash/domain/Departures.kt
-- [ ] T007 [P] Align repository determinism expectations with contract scenarios in app/src/main/java/com/platformdash/data/MockTrainRepository.kt
-- [ ] T008 Confirm Gradle wrapper/toolchain compatibility with AGP 9.2.1 in gradle/wrapper/gradle-wrapper.properties
+- [x] T005 Replace widget palette with fixed GBR colors (#071D49, #E60000, #FFFFFF) in app/src/main/res/values/colors.xml
+- [x] T006 Refine status and route domain constraints for rendering assumptions in app/src/main/java/com/platformdash/domain/Departures.kt
+- [x] T007 [P] Align repository determinism expectations with contract scenarios in app/src/main/java/com/platformdash/data/MockTrainRepository.kt
+- [x] T008 Confirm Gradle wrapper/toolchain compatibility with AGP 9.2.1 in gradle/wrapper/gradle-wrapper.properties
 
 **Checkpoint**: Foundation ready. User stories can now be delivered independently.
 
@@ -35,16 +35,16 @@
 
 ## Phase 3: User Story 1 - Read commute status at a glance (Priority: P1) 🎯 MVP
 
-**Goal**: Show route departures with correct empty state and clear status emphasis, including on-time green and cancelled red.
+**Goal**: Show route departures with correct empty state and strict text contrast rules, with Cancelled in GBR Red.
 
-**Independent Test**: With the default mock scenario active, widget shows route header, departure rows, ON_TIME in green, CANCELLED in red, and empty-state text for no-service scenario.
+**Independent Test**: With the default mock scenario active, widget shows route header and departure rows with contrast text, CANCELLED in GBR Red (#E60000), and empty-state text for no-service scenario.
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Implement ON_TIME success-green row styling in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
-- [ ] T010 [US1] Keep CANCELLED error-red styling and shared row formatting in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
-- [ ] T011 [P] [US1] Ensure mixed-status fixture coverage in default scenario in app/src/main/java/com/platformdash/data/MockTrainRepository.kt
-- [ ] T012 [US1] Ensure no-services scenario renders No departures available state in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- [x] T009 [US1] Apply contrast text color for ON_TIME and DELAYED rows in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- [x] T010 [US1] Keep CANCELLED styling fixed to GBR Red (#E60000) in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- [x] T011 [P] [US1] Ensure mixed-status fixture coverage in default scenario in app/src/main/java/com/platformdash/data/MockTrainRepository.kt
+- [x] T012 [US1] Ensure no-services scenario renders No departures available state in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
 - [ ] T013 [US1] Update rendering contract with final status-color mapping language in specs/001-commute-widget/contracts/widget-rendering-contract.md
 
 **Checkpoint**: User Story 1 is independently functional and demoable.
@@ -70,16 +70,17 @@
 
 ## Phase 5: User Story 3 - Respect app theme preferences (Priority: P3)
 
-**Goal**: Ensure widget visuals follow shared theme preference for System, Light, and Dark modes.
+**Goal**: Ensure widget visuals follow strict Light/Dark-only behavior and fixed GBR palette values.
 
-**Independent Test**: Changing theme mode in app settings updates widget background and text colors without breaking status color emphasis.
+**Independent Test**: Changing theme mode in app settings applies Light or Dark palettes only, renders visible double border in both modes, and preserves contrast text rules.
 
 ### Implementation for User Story 3
 
-- [ ] T018 [US3] Validate theme preference read/fallback behavior in app/src/main/java/com/platformdash/settings/ThemePreferences.kt
-- [ ] T019 [US3] Finalize widget palette mapping for SYSTEM, LIGHT, and DARK in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
-- [ ] T020 [P] [US3] Add or refine widget base colors used by SYSTEM mode in app/src/main/res/values/colors.xml
-- [ ] T021 [US3] Align settings-host theme controls with widget behavior in app/src/main/java/com/platformdash/settings/SettingsHostScreen.kt
+- [x] T018 [US3] Validate theme preference read/fallback behavior in app/src/main/java/com/platformdash/settings/ThemePreferences.kt
+- [x] T019 [US3] Finalize widget palette mapping for LIGHT and DARK only in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- [x] T020 [P] [US3] Remove System mode assumptions from theme resources in app/src/main/res/values/colors.xml
+- [x] T021 [US3] Align settings-host theme controls with widget behavior in app/src/main/java/com/platformdash/settings/SettingsHostScreen.kt
+- [x] T022 [US3] Implement nested border() and padding() modifier chain on root Column in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
 
 **Checkpoint**: User Story 3 is independently functional through theme switching.
 
@@ -89,9 +90,9 @@
 
 **Purpose**: Final consistency and handoff quality across all stories.
 
-- [ ] T022 [P] Reconcile acceptance checks against delivered behavior in specs/001-commute-widget/spec.md
-- [ ] T023 Run end-to-end quickstart validation and update any mismatches in specs/001-commute-widget/quickstart.md
-- [ ] T024 Document final implementation notes and deferred follow-ups in specs/001-commute-widget/plan.md
+- [ ] T023 [P] Reconcile acceptance checks against delivered behavior in specs/001-commute-widget/spec.md
+- [ ] T024 Run end-to-end quickstart validation and update any mismatches in specs/001-commute-widget/quickstart.md
+- [ ] T025 Document final implementation notes and deferred follow-ups in specs/001-commute-widget/plan.md
 
 ---
 
@@ -116,13 +117,13 @@
 - Phase 2: T007 can run in parallel with T005-T006.
 - US1: T011 can run in parallel with T009-T010.
 - US3: T020 can run in parallel with T018-T019.
-- Polish: T022 can run in parallel with T023.
+- Polish: T023 can run in parallel with T024.
 
 ---
 
 ## Parallel Example: User Story 1
 
-- Task: T009 [US1] Implement ON_TIME success-green row styling in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- Task: T009 [US1] Apply contrast text color for ON_TIME and DELAYED rows in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
 - Task: T011 [US1] Ensure mixed-status fixture coverage in default scenario in app/src/main/java/com/platformdash/data/MockTrainRepository.kt
 
 ## Parallel Example: User Story 2
@@ -132,8 +133,8 @@
 
 ## Parallel Example: User Story 3
 
-- Task: T019 [US3] Finalize widget palette mapping for SYSTEM, LIGHT, and DARK in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
-- Task: T020 [US3] Add or refine widget base colors used by SYSTEM mode in app/src/main/res/values/colors.xml
+- Task: T019 [US3] Finalize widget palette mapping for LIGHT and DARK only in app/src/main/java/com/platformdash/widget/CommuteWidget.kt
+- Task: T020 [US3] Remove System mode assumptions from theme resources in app/src/main/res/values/colors.xml
 
 ---
 
@@ -150,14 +151,14 @@
 
 1. Deliver US1 for core commuter value.
 2. Deliver US2 for responsive scaling quality.
-3. Deliver US3 for theme consistency.
+3. Deliver US3 for strict GBR theme consistency.
 4. Finish with polish tasks for acceptance and handoff.
 
 ### Format Validation
 
 All tasks in this file follow the checklist format:
 - Checkbox prefix
-- Sequential Task ID (T001-T024)
+- Sequential Task ID (T001-T025)
 - Optional [P] marker only where parallelizable
 - [US#] labels on user-story tasks only
 - Explicit file path in every task description

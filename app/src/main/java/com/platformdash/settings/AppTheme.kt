@@ -1,6 +1,5 @@
 package com.platformdash.settings
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -12,7 +11,6 @@ fun AppTheme(
     content: @Composable () -> Unit,
 ) {
     val useDarkTheme = when (themeMode) {
-        ThemeMode.SYSTEM -> isSystemInDarkTheme()
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
     }

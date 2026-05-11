@@ -1,7 +1,6 @@
 package com.platformdash.widget
 
 import android.content.Context
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -23,7 +22,6 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.platformdash.R
 import com.platformdash.data.MockTrainRepository
 import com.platformdash.domain.Departure
 import com.platformdash.domain.DepartureStatus
@@ -55,43 +53,56 @@ private fun CommuteWidgetContent(
 ) {
     val scale = widgetScaleConfig(LocalSize.current.height)
     val topServices = departures.services.take(scale.maxTrains)
-    val cancelledColor = ColorProvider(MaterialTheme.colorScheme.error)
     val colors = widgetColors(mode = mode)
 
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(colors.background)
-            .padding(12.dp)
+            .background(colors.borderOuter)
+            .padding(2.dp)
     ) {
-        Text(
-            text = "${departures.route.normalizedOrigin} -> ${departures.route.normalizedDestination}",
-            style = TextStyle(
-                fontSize = scale.headerFontSize,
-                fontWeight = FontWeight.Bold,
-                color = colors.text,
-            )
-        )
-
-        Spacer(modifier = GlanceModifier.height(8.dp))
-
-        if (topServices.isEmpty()) {
-            Text(
-                text = "No departures available",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    color = colors.text,
+        Column(
+            modifier = GlanceModifier
+                .fillMaxSize()
+                .background(colors.borderInner)
+                .padding(1.dp)
+        ) {
+            Column(
+                modifier = GlanceModifier
+                    .fillMaxSize()
+                    .background(colors.background)
+                    .padding(12.dp)
+            ) {
+                Text(
+                    text = "${departures.route.normalizedOrigin} -> ${departures.route.normalizedDestination}",
+                    style = TextStyle(
+                        fontSize = scale.headerFontSize,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.text,
+                    )
                 )
-            )
-        } else {
-            topServices.forEach { service ->
-                DepartureRow(
-                    service = service,
-                    cancelledColor = cancelledColor,
-                    textColor = colors.text,
-                    timeFontSize = scale.timeFontSize,
-                )
-                Spacer(modifier = GlanceModifier.height(6.dp))
+
+                Spacer(modifier = GlanceModifier.height(8.dp))
+
+                if (topServices.isEmpty()) {
+                    Text(
+                        text = "No departures available",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            color = colors.text,
+                        )
+                    )
+                } else {
+                    topServices.forEach { service ->
+                        DepartureRow(
+                            service = service,
+                            cancelledColor = colors.cancelled,
+                            textColor = colors.text,
+                            timeFontSize = scale.timeFontSize,
+                        )
+                        Spacer(modifier = GlanceModifier.height(6.dp))
+                    }
+                }
             }
         }
     }
@@ -101,23 +112,27 @@ private fun CommuteWidgetContent(
 private data class WidgetColors(
     val background: ColorProvider,
     val text: ColorProvider,
+    val borderOuter: ColorProvider,
+    val borderInner: ColorProvider,
+    val cancelled: ColorProvider,
 )
 
 private fun widgetColors(mode: ThemeMode): WidgetColors {
     return when (mode) {
-        ThemeMode.SYSTEM -> WidgetColors(
-            background = ColorProvider(R.color.widget_background),
-            text = ColorProvider(R.color.widget_text_primary),
-        )
-
         ThemeMode.LIGHT -> WidgetColors(
             background = ColorProvider(Color.White),
-            text = ColorProvider(Color(0xFF111111)),
+            text = ColorProvider(Color(0xFF071D49)),
+            borderOuter = ColorProvider(Color(0xFF071D49)),
+            borderInner = ColorProvider(Color(0xFFE60000)),
+            cancelled = ColorProvider(Color(0xFFE60000)),
         )
 
         ThemeMode.DARK -> WidgetColors(
-            background = ColorProvider(Color(0xFF121212)),
-            text = ColorProvider(Color(0xFFEAEAEA)),
+            background = ColorProvider(Color(0xFF071D49)),
+            text = ColorProvider(Color(0xFFFFFFFF)),
+            borderOuter = ColorProvider(Color(0xFFFFFFFF)),
+            borderInner = ColorProvider(Color(0xFFE60000)),
+            cancelled = ColorProvider(Color(0xFFE60000)),
         )
     }
 }

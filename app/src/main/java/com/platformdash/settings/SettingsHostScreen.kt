@@ -58,11 +58,6 @@ fun SettingsHostScreen(
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 ThemeModeButton(
-                    label = "System",
-                    selected = themeMode == ThemeMode.SYSTEM,
-                    onClick = { onThemeModeChange(ThemeMode.SYSTEM) },
-                )
-                ThemeModeButton(
                     label = "Light",
                     selected = themeMode == ThemeMode.LIGHT,
                     onClick = { onThemeModeChange(ThemeMode.LIGHT) },

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_background">#FFFFFFFF</color>
-    <color name="widget_text_primary">#FF111111</color>
+    <color name="widget_gbr_navy">#071D49</color>
+    <color name="widget_gbr_red">#E60000</color>
+    <color name="widget_gbr_white">#FFFFFF</color>
+
+    <color name="widget_light_background">#FFFFFF</color>
+    <color name="widget_dark_background">#071D49</color>
+    <color name="widget_light_text_primary">#071D49</color>
+    <color name="widget_dark_text_primary">#FFFFFF</color>
+    <color name="widget_light_border_outer">#071D49</color>
+    <color name="widget_dark_border_outer">#FFFFFF</color>
+    <color name="widget_border_inner">#E60000</color>
+    <color name="widget_status_cancelled">#E60000</color>
 </resources>
